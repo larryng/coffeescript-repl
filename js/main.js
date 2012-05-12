@@ -169,6 +169,7 @@ $(function () {
   
   // header
   print("// CoffeeScript v" + CoffeeScript.VERSION + " REPL")
+  print("// https://github.com/larryng/coffeescript-repl");
   print("//");
   print("// Press Esc to toggle multiline mode.");
   print("// Variable `$_` stores last returned value.");
