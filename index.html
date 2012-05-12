@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <title>In-browser CoffeeScript REPL</title>
+  <head>
+    <style>
+      
+      pre {
+        margin: 0;
+        padding: 0;
+      }
+      
+      body {
+        background-color: #222;
+        color: #fff;
+        font-size: 1em;
+      }
+      
+      #container {
+        width: 100%;
+        height: 100%;
+        font-family: monospace;
+      }
+      
+      #output {
+        word-wrap: break-word;
+      }
+      
+      #inputdiv {
+        width: 100%;
+      }
+      
+      #inputl {
+        display: inline;
+      }
+      
+      #inputr {
+        display: inline;
+      }
+      
+      #input {
+        border: none;
+        outline: none;
+        background-color: #222;
+        color: #fff;
+        font-family: monospace;
+        margin: 0;
+        padding: 0;
+        font-size: 1em;
+        resize: none;
+        position: absolute;
+        overflow: hidden;
+      }
+      
+      #inputcopy {
+        display: none;
+        white-space: pre-wrap;
+        min-height: 2em;
+        padding: 0;
+        margin: 0;
+        word-wrap: break-word;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="output"></div>
+      <div id="inputdiv">
+        <div id="inputl">
+          <code id="prompt">coffee&gt;&nbsp;</code>
+        </div>
+        <div id="inputr">
+          <textarea id="input"></textarea>
+          <div id="inputcopy"></div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="js/coffee-script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
