@@ -19,7 +19,7 @@ $(function () {
   var SAVED = "";
   var MULTILINE = false;
   
-  var print = function (s) {
+  var print_ = function (s) {
     s = s || " ";
     $output[0].innerHTML += '<pre>' + s + '</pre>';
   }
@@ -51,7 +51,7 @@ $(function () {
       }
     }
     SAVED = "";
-    print(output);
+    print_(output);
   }
   
   var setPrompt = function (multi) {
@@ -102,7 +102,7 @@ $(function () {
       e.preventDefault();
       input = grabInput();
       
-      print($prompt.html() + input);
+      print_($prompt.html() + input);
       
       if (input) {
         addToSaved(input);
@@ -119,7 +119,7 @@ $(function () {
           if (SAVED) {
             input = grabInput();
             
-            print($prompt.html() + input);
+            print_($prompt.html() + input);
             addToSaved(input);
             processSaved();
           }
@@ -154,7 +154,7 @@ $(function () {
   };
   
   var printKeyPressed = function (e) {
-    print(e.which);
+    print_(e.which);
   }
   
   // bind handlers
@@ -168,11 +168,11 @@ $(function () {
   $input.focus();
   
   // header
-  print("// CoffeeScript v" + CoffeeScript.VERSION + " REPL")
-  print("// https://github.com/larryng/coffeescript-repl");
-  print("//");
-  print("// Press Esc to toggle multiline mode.");
-  print("// Variable `$_` stores last returned value.");
-  print();
+  print_("// CoffeeScript v" + CoffeeScript.VERSION + " REPL")
+  print_("// https://github.com/larryng/coffeescript-repl");
+  print_("//");
+  print_("// Press Esc to toggle multiline mode.");
+  print_("// Variable `$_` stores last returned value.");
+  print_();
   
 })
