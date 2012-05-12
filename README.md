@@ -1,7 +1,7 @@
 coffeescript-repl
 =================
 
-A page that provides a CoffeeScript REPL/console within your browser.
+A webpage that provides an instant CoffeeScript REPL/console.
 
 Try it here: http://larryng.github.com/coffeescript-repl/
 
