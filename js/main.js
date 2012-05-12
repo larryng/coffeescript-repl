@@ -171,6 +171,11 @@ $(function () {
   $(window).resize(resizeInput);
   $input.keyup(resizeInput);
   $input.change(resizeInput);
+  $('html').click(function (e) {
+    if (e.clientY > $input[0].offsetTop) {
+      $input.focus();
+    }
+  });
   
   // initialize
   resizeInput();
