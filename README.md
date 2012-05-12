@@ -11,6 +11,7 @@ Features
 * CoffeeScript REPL. Instantly. In your browser.
 * History
 * Multiline support
+* Access last returned value with the `$_` variable
 * 100% HTML and JavaScript, so you can just "Save Page As..." and run it
   locally
-* Open source (ISC Licensed)
+* ISC Licensed
