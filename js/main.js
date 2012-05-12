@@ -19,9 +19,18 @@ $(function () {
   var SAVED = "";
   var MULTILINE = false;
   
+  var SAVED_CONSOLE_LOG = console.log;
+  
   var print_ = function (s) {
     s = s || " ";
     $output[0].innerHTML += '<pre>' + s + '</pre>';
+  }
+  
+  var log = function () {
+    args = Array.prototype.slice.call(arguments);
+    SAVED_CONSOLE_LOG.apply(console, args);
+    s = args.join(' ');
+    print_(s);
   }
   
   var grabInput = function () {
@@ -166,6 +175,9 @@ $(function () {
   // initialize
   resizeInput();
   $input.focus();
+  
+  // replace console.log
+  console.log = log;
   
   // header
   print_("// CoffeeScript v" + CoffeeScript.VERSION + " REPL")
