@@ -19,7 +19,7 @@
         CoffeeREPL.name = 'CoffeeREPL';
 
         function CoffeeREPL(output, input, prompt, settings) {
-          var k, lastVariable, v;
+          var k, v;
           this.output = output;
           this.input = input;
           this.prompt = prompt;
@@ -30,7 +30,9 @@
           this.historyi = -1;
           this.saved = '';
           this.multiline = false;
-          this.settings = lastVariable = DEFAULT_LAST_VARIABLE;
+          this.settings = {
+            lastVariable: DEFAULT_LAST_VARIABLE
+          };
           for (k in settings) {
             v = settings[k];
             this.settings[k] = v;
@@ -171,11 +173,11 @@
       });
       resizeInput();
       $input.focus();
-      repl.print("// CoffeeScript v1.3.1 REPL");
-      repl.print("// https://github.com/larryng/coffeescript-repl");
-      repl.print("//");
-      repl.print("// Press Esc to toggle multiline mode.");
-      repl.print("// Variable `$_` stores last returned value.");
+      repl.print("# CoffeeScript v1.3.1 REPL");
+      repl.print("# https://github.com/larryng/coffeescript-repl");
+      repl.print("#");
+      repl.print("# Press Esc to toggle multiline mode.");
+      repl.print("# Variable `" + repl.settings.lastVariable + "` stores last returned value.");
       return repl.print();
     });
   });

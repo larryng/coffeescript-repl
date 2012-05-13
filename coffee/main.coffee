@@ -25,7 +25,7 @@ require ['coffee-script', 'jquery', 'nodeutil'], (CoffeeScript, $, nodeutil) ->
         @multiline = false
         
         @settings =
-          lastVariable = DEFAULT_LAST_VARIABLE
+          lastVariable: DEFAULT_LAST_VARIABLE
         
         for k, v of settings
           @settings[k] = v
@@ -154,9 +154,9 @@ require ['coffee-script', 'jquery', 'nodeutil'], (CoffeeScript, $, nodeutil) ->
     resizeInput()
     $input.focus()
     
-    repl.print "// CoffeeScript v1.3.1 REPL"
-    repl.print "// https://github.com/larryng/coffeescript-repl"
-    repl.print "//"
-    repl.print "// Press Esc to toggle multiline mode."
-    repl.print "// Variable `$_` stores last returned value."
+    repl.print "# CoffeeScript v1.3.1 REPL"
+    repl.print "# https://github.com/larryng/coffeescript-repl"
+    repl.print "#"
+    repl.print "# Press Esc to toggle multiline mode."
+    repl.print "# Variable `#{repl.settings.lastVariable}` stores last returned value."
     repl.print()
