@@ -4,7 +4,7 @@
 
   require(['coffee-script', 'jquery', 'nodeutil'], function(CoffeeScript, $, nodeutil) {
     return $(function() {
-      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, DEFAULT_LAST_VARIABLE, SAVED_CONSOLE_LOG, log, repl, resizeInput, scrollToBottom;
+      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, DEFAULT_LAST_VARIABLE, HEADER, SAVED_CONSOLE_LOG, log, repl, resizeInput, scrollToBottom;
       SAVED_CONSOLE_LOG = console.log;
       DEFAULT_LAST_VARIABLE = '$_';
       $output = $('#output');
@@ -173,12 +173,8 @@
       });
       resizeInput();
       $input.focus();
-      repl.print("# CoffeeScript v1.3.1 REPL");
-      repl.print("# https://github.com/larryng/coffeescript-repl");
-      repl.print("#");
-      repl.print("# Press Esc to toggle multiline mode.");
-      repl.print("# Variable `" + repl.settings.lastVariable + "` stores last returned value.");
-      return repl.print();
+      HEADER = ["# CoffeeScript v1.3.1 REPL", "# https://github.com/larryng/coffeescript-repl", "#", "# Press Esc to toggle multiline mode.", "# Variable `" + repl.settings.lastVariable + "` stores last returned value.", " "].join('\n');
+      return repl.print(HEADER);
     });
   });
 

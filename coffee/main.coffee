@@ -154,9 +154,14 @@ require ['coffee-script', 'jquery', 'nodeutil'], (CoffeeScript, $, nodeutil) ->
     resizeInput()
     $input.focus()
     
-    repl.print "# CoffeeScript v1.3.1 REPL"
-    repl.print "# https://github.com/larryng/coffeescript-repl"
-    repl.print "#"
-    repl.print "# Press Esc to toggle multiline mode."
-    repl.print "# Variable `#{repl.settings.lastVariable}` stores last returned value."
-    repl.print()
+    # print header
+    HEADER = [
+      "# CoffeeScript v1.3.1 REPL"
+      "# https://github.com/larryng/coffeescript-repl"
+      "#"
+      "# Press Esc to toggle multiline mode."
+      "# Variable `#{repl.settings.lastVariable}` stores last returned value."
+      " "
+    ].join('\n')
+    
+    repl.print HEADER
