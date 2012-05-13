@@ -43,7 +43,7 @@
           var args, s;
           args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
           s = args.join(' ') || ' ';
-          return this.output[0].innerHTML += "<pre>" + s + "</pre>";
+          return this.output.append("<pre>" + s + "</pre>");
         };
 
         CoffeeREPL.prototype.grabInput = function() {

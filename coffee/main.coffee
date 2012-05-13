@@ -32,7 +32,7 @@ require ['coffee-script', 'jquery', 'nodeutil'], (CoffeeScript, $, nodeutil) ->
       
       print: (args...) ->
         s = args.join(' ') or ' '
-        @output[0].innerHTML += "<pre>#{s}</pre>"
+        @output.append "<pre>#{s}</pre>"
       
       grabInput: ->
         tmp = @input.val()
