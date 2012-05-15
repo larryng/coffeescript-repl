@@ -263,6 +263,9 @@ define(
       return reduceToSingleString(output, base, braces);
     }
     
+    function escapeHTML (s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
     
     function formatPrimitive(ctx, value) {
       switch (typeof value) {
@@ -273,7 +276,7 @@ define(
           var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
                                                    .replace(/'/g, "\\'")
                                                    .replace(/\\"/g, '"') + '\'';
-          return ctx.stylize(simple, 'string');
+          return ctx.stylize(escapeHTML(simple), 'string');
     
         case 'number':
           return ctx.stylize('' + value, 'number');

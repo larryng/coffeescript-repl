@@ -17,6 +17,11 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
     $inputr    = $('#inputr')
     $inputcopy = $('#inputcopy')
     
+    
+    escapeHTML = (s) ->
+      s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    
+    
     class CoffeeREPL
       constructor: (@output, @input, @prompt, settings={}) ->
         @history = []
@@ -83,7 +88,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
             e.preventDefault()
             input = @grabInput()
             
-            @print @prompt.html() + input
+            @print @prompt.html() + escapeHTML(input)
             
             if input
               @addToSaved input
@@ -97,7 +102,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
             if input and @multiline and @saved
               input = @grabInput()
               
-              @print @prompt.html() + input
+              @print @prompt.html() + escapeHTML(input)
               @addToSaved input
               @processSaved()
             else if @multiline and @saved

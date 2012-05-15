@@ -5,7 +5,7 @@
 
   require(['jquery', 'coffee-script', 'nodeutil'], function($, CoffeeScript, nodeutil) {
     return $(function() {
-      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, DEFAULT_LAST_VARIABLE, SAVED_CONSOLE_LOG, init, resizeInput, scrollToBottom;
+      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, DEFAULT_LAST_VARIABLE, SAVED_CONSOLE_LOG, escapeHTML, init, resizeInput, scrollToBottom;
       SAVED_CONSOLE_LOG = console.log;
       DEFAULT_LAST_VARIABLE = '$_';
       $output = $('#output');
@@ -15,6 +15,9 @@
       $inputl = $('#inputl');
       $inputr = $('#inputr');
       $inputcopy = $('#inputcopy');
+      escapeHTML = function(s) {
+        return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      };
       CoffeeREPL = (function() {
 
         CoffeeREPL.name = 'CoffeeREPL';
@@ -121,7 +124,7 @@
             case 13:
               e.preventDefault();
               input = this.grabInput();
-              this.print(this.prompt.html() + input);
+              this.print(this.prompt.html() + escapeHTML(input));
               if (input) {
                 this.addToSaved(input);
                 if (input.slice(0, -1) !== '\\' && !this.multiline) {
@@ -134,7 +137,7 @@
               input = this.input.val();
               if (input && this.multiline && this.saved) {
                 input = this.grabInput();
-                this.print(this.prompt.html() + input);
+                this.print(this.prompt.html() + escapeHTML(input));
                 this.addToSaved(input);
                 this.processSaved();
               } else if (this.multiline && this.saved) {
