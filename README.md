@@ -12,6 +12,5 @@ Features
 * History
 * Multiline support
 * Access last returned value with the `$_` variable
-* 100% HTML and JavaScript, so you can just "Save Page As..." and run it
-  locally
+* 100% HTML and JavaScript
 * ISC Licensed
