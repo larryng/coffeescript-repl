@@ -40,7 +40,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         $input.val ''
         tmp
       
-      processSaved: () ->
+      processSaved: ->
         try
           compiled = CoffeeScript.compile @saved
           compiled = compiled[14...-17]
@@ -60,7 +60,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         @saved = ''
         @print output
       
-      setPrompt: () ->
+      setPrompt: ->
         s = if @multiline then '------' else 'coffee'
         @prompt.html "#{s}&gt;&nbsp;"
       
@@ -128,16 +128,16 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
       $input.height $inputcopy.height()
     
     
-    scrollToBottom = () ->
+    scrollToBottom = ->
       window.scrollTo 0, $prompt[0].offsetTop
     
     
-    clear = () ->
+    clear = ->
       $output[0].innerHTML = ''
       undefined
     
     
-    init = () ->
+    init = ->
       
       # instantiate our REPL
       repl = new CoffeeREPL $output, $input, $prompt
