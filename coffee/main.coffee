@@ -8,6 +8,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
   $ ->
     SAVED_CONSOLE_LOG = console.log
     DEFAULT_LAST_VARIABLE = '$_'
+    DEFAULT_MAX_LINES = 500
     
     $output    = $('#output')
     $input     = $('#input')
@@ -31,13 +32,15 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         
         @settings =
           lastVariable: DEFAULT_LAST_VARIABLE
+          maxLines: DEFAULT_MAX_LINES
         
         for k, v of settings
           @settings[k] = v
       
       print: (args...) =>
         s = args.join(' ') or ' '
-        @output[0].innerHTML += "<pre>#{s}</pre>"
+        o = @output[0].innerHTML + s + '\n'
+        @output[0].innerHTML = o.split('\n')[-@settings.maxLines...].join('\n')
         undefined
       
       grabInput: =>

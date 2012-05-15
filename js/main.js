@@ -5,9 +5,10 @@
 
   require(['jquery', 'coffee-script', 'nodeutil'], function($, CoffeeScript, nodeutil) {
     return $(function() {
-      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, DEFAULT_LAST_VARIABLE, SAVED_CONSOLE_LOG, escapeHTML, init, resizeInput, scrollToBottom;
+      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, DEFAULT_LAST_VARIABLE, DEFAULT_MAX_LINES, SAVED_CONSOLE_LOG, escapeHTML, init, resizeInput, scrollToBottom;
       SAVED_CONSOLE_LOG = console.log;
       DEFAULT_LAST_VARIABLE = '$_';
+      DEFAULT_MAX_LINES = 500;
       $output = $('#output');
       $input = $('#input');
       $prompt = $('#prompt');
@@ -51,7 +52,8 @@
           this.saved = '';
           this.multiline = false;
           this.settings = {
-            lastVariable: DEFAULT_LAST_VARIABLE
+            lastVariable: DEFAULT_LAST_VARIABLE,
+            maxLines: DEFAULT_MAX_LINES
           };
           for (k in settings) {
             v = settings[k];
@@ -60,10 +62,11 @@
         }
 
         CoffeeREPL.prototype.print = function() {
-          var args, s;
+          var args, o, s;
           args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
           s = args.join(' ') || ' ';
-          this.output[0].innerHTML += "<pre>" + s + "</pre>";
+          o = this.output[0].innerHTML + s + '\n';
+          this.output[0].innerHTML = o.split('\n').slice(-this.settings.maxLines).join('\n');
           return;
         };
 
