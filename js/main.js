@@ -27,7 +27,21 @@
           if (settings == null) {
             settings = {};
           }
+          this.handleKeypress = __bind(this.handleKeypress, this);
+
           this.clear = __bind(this.clear, this);
+
+          this.addToSaved = __bind(this.addToSaved, this);
+
+          this.addToHistory = __bind(this.addToHistory, this);
+
+          this.setPrompt = __bind(this.setPrompt, this);
+
+          this.processSaved = __bind(this.processSaved, this);
+
+          this.grabInput = __bind(this.grabInput, this);
+
+          this.print = __bind(this.print, this);
 
           this.history = [];
           this.historyi = -1;

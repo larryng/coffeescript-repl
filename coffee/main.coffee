@@ -30,17 +30,17 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         for k, v of settings
           @settings[k] = v
       
-      print: (args...) ->
+      print: (args...) =>
         s = args.join(' ') or ' '
         @output[0].innerHTML += "<pre>#{s}</pre>"
         undefined
       
-      grabInput: ->
+      grabInput: =>
         tmp = @input.val()
         $input.val ''
         tmp
       
-      processSaved: ->
+      processSaved: =>
         try
           compiled = CoffeeScript.compile @saved
           compiled = compiled[14...-17]
@@ -60,15 +60,15 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         @saved = ''
         @print output
       
-      setPrompt: ->
+      setPrompt: =>
         s = if @multiline then '------' else 'coffee'
         @prompt.html "#{s}&gt;&nbsp;"
       
-      addToHistory: (s) ->
+      addToHistory: (s) =>
         @history.unshift s
         @historyi = -1
       
-      addToSaved: (s) ->
+      addToSaved: (s) =>
         @saved += if s[...-1] is '\\' then s[0...-1] else s
         @saved += '\n'
         @addToHistory s
@@ -77,7 +77,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         @output[0].innerHTML = ''
         undefined
       
-      handleKeypress: (e) ->
+      handleKeypress: (e) =>
         switch e.which
           when 13
             e.preventDefault()
