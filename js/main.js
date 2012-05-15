@@ -5,10 +5,11 @@
 
   require(['jquery', 'coffee-script', 'nodeutil'], function($, CoffeeScript, nodeutil) {
     return $(function() {
-      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, DEFAULT_LAST_VARIABLE, DEFAULT_MAX_LINES, SAVED_CONSOLE_LOG, escapeHTML, init, resizeInput, scrollToBottom;
+      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, DEFAULT_LAST_VARIABLE, DEFAULT_MAX_DEPTH, DEFAULT_MAX_LINES, SAVED_CONSOLE_LOG, escapeHTML, init, resizeInput, scrollToBottom;
       SAVED_CONSOLE_LOG = console.log;
       DEFAULT_LAST_VARIABLE = '$_';
       DEFAULT_MAX_LINES = 500;
+      DEFAULT_MAX_DEPTH = 2;
       $output = $('#output');
       $input = $('#input');
       $prompt = $('#prompt');
@@ -53,7 +54,8 @@
           this.multiline = false;
           this.settings = {
             lastVariable: DEFAULT_LAST_VARIABLE,
-            maxLines: DEFAULT_MAX_LINES
+            maxLines: DEFAULT_MAX_LINES,
+            maxDepth: DEFAULT_MAX_DEPTH
           };
           for (k in settings) {
             v = settings[k];
@@ -84,7 +86,7 @@
             compiled = compiled.slice(14, -17);
             value = eval.call(window, compiled);
             window[this.settings.lastVariable] = value;
-            output = nodeutil.inspect(value, void 0, void 0, true);
+            output = nodeutil.inspect(value, void 0, this.settings.maxDepth, true);
           } catch (e) {
             if (e.stack) {
               output = e.stack;

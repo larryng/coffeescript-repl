@@ -9,6 +9,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
     SAVED_CONSOLE_LOG = console.log
     DEFAULT_LAST_VARIABLE = '$_'
     DEFAULT_MAX_LINES = 500
+    DEFAULT_MAX_DEPTH = 2
     
     $output    = $('#output')
     $input     = $('#input')
@@ -33,6 +34,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         @settings =
           lastVariable: DEFAULT_LAST_VARIABLE
           maxLines: DEFAULT_MAX_LINES
+          maxDepth: DEFAULT_MAX_DEPTH
         
         for k, v of settings
           @settings[k] = v
@@ -54,7 +56,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
           compiled = compiled[14...-17]
           value = eval.call window, compiled
           window[@settings.lastVariable] = value
-          output = nodeutil.inspect value, undefined, undefined, true
+          output = nodeutil.inspect value, undefined, @settings.maxDepth, true
         catch e
           if e.stack
             output = e.stack
