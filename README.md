@@ -12,7 +12,7 @@ Problems Solved
 ---------------
 * Try CoffeeScript instantly in any modern browser (including mobile!).
 * Especially useful for Windows users who currently have only cumbersome
-  installation solutions.only
+  installation solutions.
 * Seamlessly test CoffeeScript functionality in your browser's context, e.g.
   `$(window)[0].open 'http://www.google.com/'`.
 
