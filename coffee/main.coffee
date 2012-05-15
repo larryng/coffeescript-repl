@@ -170,7 +170,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
       # print header
       HEADER = [
         "# CoffeeScript v1.3.1 REPL"
-        "# https://github.com/larryng/coffeescript-repl"
+        "# <a href=\"https://github.com/larryng/coffeescript-repl\" target=\"_blank\">https://github.com/larryng/coffeescript-repl</a>"
         "#"
         "# Tips:"
         "#   - Press Esc to toggle multiline mode."

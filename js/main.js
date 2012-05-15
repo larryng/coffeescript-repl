@@ -199,7 +199,7 @@
         });
         resizeInput();
         $input.focus();
-        HEADER = ["# CoffeeScript v1.3.1 REPL", "# https://github.com/larryng/coffeescript-repl", "#", "# Tips:", "#   - Press Esc to toggle multiline mode.", "#   - " + repl.settings.lastVariable + " stores last returned value.", "#   - clear() clears the console.", " "].join('\n');
+        HEADER = ["# CoffeeScript v1.3.1 REPL", "# <a href=\"https://github.com/larryng/coffeescript-repl\" target=\"_blank\">https://github.com/larryng/coffeescript-repl</a>", "#", "# Tips:", "#   - Press Esc to toggle multiline mode.", "#   - " + repl.settings.lastVariable + " stores last returned value.", "#   - clear() clears the console.", " "].join('\n');
         return repl.print(HEADER);
       };
       return init();
