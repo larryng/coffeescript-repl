@@ -126,6 +126,7 @@ define(
       'yellow' : [33, 39]
     };
     
+    /*
     // Don't use 'blue' not visible on cmd.exe
     var styles = {
       'special': 'cyan',
@@ -146,6 +147,34 @@ define(
       if (style) {
         return '\033[' + colors[style][0] + 'm' + str +
                '\033[' + colors[style][1] + 'm';
+      } else {
+        return str;
+      }
+    }
+    */
+    
+    var styles = {
+      'special': '#4ff',
+      'number': '#ff4',
+      'boolean': '#ff4',
+      'undefined': '#999',
+      'null': 'bold',
+      'string': '#4f4',
+      'date': '#f4f',
+      // "name": intentionally not styling
+      'regexp': '#f44'
+    };
+    
+    
+    function stylizeWithColor(str, styleType) {
+      var style = styles[styleType];
+    
+      if (style) {
+        if (style === 'bold') {
+          return '<span style="font-weight: bold">' + str + '</span>';
+        } else {
+          return '<span style="color:' + style + '">' + str + '</span>';
+        }
       } else {
         return str;
       }
@@ -360,13 +389,15 @@ define(
       return name + ': ' + str;
     }
     
-    
+    var spanpattern = /^<span .+?>(.*)<\/span>$/;
     function reduceToSingleString(output, base, braces) {
       var numLinesEst = 0;
       var length = output.reduce(function(prev, cur) {
+        var m = cur.match(spanpattern);
+        var curlength = m ? m[1].length : cur.length;
         numLinesEst++;
         if (cur.indexOf('\n') >= 0) numLinesEst++;
-        return prev + cur.length + 1;
+        return prev + curlength + 1;
       }, 0);
     
       if (length > 60) {
