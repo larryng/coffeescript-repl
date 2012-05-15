@@ -132,6 +132,11 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
       window.scrollTo 0, $prompt[0].offsetTop
     
     
+    clear = () ->
+      $output[0].innerHTML = ''
+      undefined
+    
+    
     init = () ->
       
       # instantiate our REPL
@@ -143,6 +148,9 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         repl.print args...
       
       console.log = log
+      
+      # set clear()
+      window.clear = clear
       
       # bind handlers
       $input.keydown (e) -> repl.handleKeypress e
@@ -165,8 +173,10 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         "# CoffeeScript v1.3.1 REPL"
         "# https://github.com/larryng/coffeescript-repl"
         "#"
-        "# Press Esc to toggle multiline mode."
-        "# Variable `#{repl.settings.lastVariable}` stores last returned value."
+        "# Tips:"
+        "#   - Press Esc to toggle multiline mode."
+        "#   - #{repl.settings.lastVariable} stores last returned value."
+        "#   - clear() clears the console."
         " "
       ].join('\n')
       

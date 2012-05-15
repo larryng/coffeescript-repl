@@ -4,7 +4,7 @@
 
   require(['jquery', 'coffee-script', 'nodeutil'], function($, CoffeeScript, nodeutil) {
     return $(function() {
-      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, DEFAULT_LAST_VARIABLE, SAVED_CONSOLE_LOG, init, resizeInput, scrollToBottom;
+      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, DEFAULT_LAST_VARIABLE, SAVED_CONSOLE_LOG, clear, init, resizeInput, scrollToBottom;
       SAVED_CONSOLE_LOG = console.log;
       DEFAULT_LAST_VARIABLE = '$_';
       $output = $('#output');
@@ -152,6 +152,10 @@
       scrollToBottom = function() {
         return window.scrollTo(0, $prompt[0].offsetTop);
       };
+      clear = function() {
+        $output[0].innerHTML = '';
+        return;
+      };
       init = function() {
         var HEADER, log, repl;
         repl = new CoffeeREPL($output, $input, $prompt);
@@ -162,6 +166,7 @@
           return repl.print.apply(repl, args);
         };
         console.log = log;
+        window.clear = clear;
         $input.keydown(function(e) {
           return repl.handleKeypress(e);
         });
@@ -176,7 +181,7 @@
         });
         resizeInput();
         $input.focus();
-        HEADER = ["# CoffeeScript v1.3.1 REPL", "# https://github.com/larryng/coffeescript-repl", "#", "# Press Esc to toggle multiline mode.", "# Variable `" + repl.settings.lastVariable + "` stores last returned value.", " "].join('\n');
+        HEADER = ["# CoffeeScript v1.3.1 REPL", "# https://github.com/larryng/coffeescript-repl", "#", "# Tips:", "#   - Press Esc to toggle multiline mode.", "#   - " + repl.settings.lastVariable + " stores last returned value.", "#   - clear() clears the console.", " "].join('\n');
         return repl.print(HEADER);
       };
       return init();
