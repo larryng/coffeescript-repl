@@ -374,6 +374,7 @@ define(
       return name + ': ' + str;
     }
     
+    
     var spanpattern = /^<span .+?>(.*)<\/span>$/;
     function reduceToSingleString(output, base, braces) {
       var numLinesEst = 0;
