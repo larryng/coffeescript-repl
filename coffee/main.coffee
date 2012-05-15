@@ -3,7 +3,7 @@
 # 
 # written by Larry Ng
 
-require ['coffee-script', 'jquery', 'nodeutil'], (CoffeeScript, $, nodeutil) ->
+require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
 
   $ ->
     SAVED_CONSOLE_LOG = console.log
@@ -32,7 +32,7 @@ require ['coffee-script', 'jquery', 'nodeutil'], (CoffeeScript, $, nodeutil) ->
       
       print: (args...) ->
         s = args.join(' ') or ' '
-        @output.append "<pre>#{s}</pre>"
+        @output[0].innerHTML += "<pre>#{s}</pre>"
       
       grabInput: ->
         tmp = @input.val()
@@ -115,6 +115,7 @@ require ['coffee-script', 'jquery', 'nodeutil'], (CoffeeScript, $, nodeutil) ->
               @historyi += -1
               @input.val @history[@historyi]
     
+    
     resizeInput = (e) ->
       width = $inputdiv.width() - $inputl.width()
       content = $input.val()
@@ -125,43 +126,50 @@ require ['coffee-script', 'jquery', 'nodeutil'], (CoffeeScript, $, nodeutil) ->
       $input.width width
       $input.height $inputcopy.height()
     
+    
     scrollToBottom = () ->
       window.scrollTo 0, $prompt[0].offsetTop
     
-    # instantiate our REPL
-    repl = new CoffeeREPL $output, $input, $prompt
     
-    # replace console.log
-    log = (args...) ->
-      SAVED_CONSOLE_LOG.apply console, args
-      repl.print args...
+    init = () ->
+      
+      # instantiate our REPL
+      repl = new CoffeeREPL $output, $input, $prompt
+      
+      # replace console.log
+      log = (args...) ->
+        SAVED_CONSOLE_LOG.apply console, args
+        repl.print args...
+      
+      console.log = log
+      
+      # bind handlers
+      $input.keydown (e) -> repl.handleKeypress e
+      $input.keydown scrollToBottom
+      
+      $(window).resize resizeInput
+      $input.keyup resizeInput
+      $input.change resizeInput
+      
+      $('html').click (e) ->
+        if e.clientY > $input[0].offsetTop
+          $input.focus()
+      
+      # initialize window
+      resizeInput()
+      $input.focus()
+      
+      # print header
+      HEADER = [
+        "# CoffeeScript v1.3.1 REPL"
+        "# https://github.com/larryng/coffeescript-repl"
+        "#"
+        "# Press Esc to toggle multiline mode."
+        "# Variable `#{repl.settings.lastVariable}` stores last returned value."
+        " "
+      ].join('\n')
+      
+      repl.print HEADER
     
-    console.log = log
     
-    # bind handlers
-    $input.keydown (e) -> repl.handleKeypress e
-    $input.keydown scrollToBottom
-    
-    $(window).resize resizeInput
-    $input.keyup resizeInput
-    $input.change resizeInput
-    
-    $('html').click (e) ->
-      if e.clientY > $input[0].offsetTop
-        $input.focus()
-    
-    # initialize window
-    resizeInput()
-    $input.focus()
-    
-    # print header
-    HEADER = [
-      "# CoffeeScript v1.3.1 REPL"
-      "# https://github.com/larryng/coffeescript-repl"
-      "#"
-      "# Press Esc to toggle multiline mode."
-      "# Variable `#{repl.settings.lastVariable}` stores last returned value."
-      " "
-    ].join('\n')
-    
-    repl.print HEADER
+    init()

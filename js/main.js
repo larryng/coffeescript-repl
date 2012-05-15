@@ -2,9 +2,9 @@
 (function() {
   var __slice = [].slice;
 
-  require(['coffee-script', 'jquery', 'nodeutil'], function(CoffeeScript, $, nodeutil) {
+  require(['jquery', 'coffee-script', 'nodeutil'], function($, CoffeeScript, nodeutil) {
     return $(function() {
-      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, DEFAULT_LAST_VARIABLE, HEADER, SAVED_CONSOLE_LOG, log, repl, resizeInput, scrollToBottom;
+      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, DEFAULT_LAST_VARIABLE, SAVED_CONSOLE_LOG, init, resizeInput, scrollToBottom;
       SAVED_CONSOLE_LOG = console.log;
       DEFAULT_LAST_VARIABLE = '$_';
       $output = $('#output');
@@ -43,7 +43,7 @@
           var args, s;
           args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
           s = args.join(' ') || ' ';
-          return this.output.append("<pre>" + s + "</pre>");
+          return this.output[0].innerHTML += "<pre>" + s + "</pre>";
         };
 
         CoffeeREPL.prototype.grabInput = function() {
@@ -151,30 +151,34 @@
       scrollToBottom = function() {
         return window.scrollTo(0, $prompt[0].offsetTop);
       };
-      repl = new CoffeeREPL($output, $input, $prompt);
-      log = function() {
-        var args;
-        args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-        SAVED_CONSOLE_LOG.apply(console, args);
-        return repl.print.apply(repl, args);
+      init = function() {
+        var HEADER, log, repl;
+        repl = new CoffeeREPL($output, $input, $prompt);
+        log = function() {
+          var args;
+          args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+          SAVED_CONSOLE_LOG.apply(console, args);
+          return repl.print.apply(repl, args);
+        };
+        console.log = log;
+        $input.keydown(function(e) {
+          return repl.handleKeypress(e);
+        });
+        $input.keydown(scrollToBottom);
+        $(window).resize(resizeInput);
+        $input.keyup(resizeInput);
+        $input.change(resizeInput);
+        $('html').click(function(e) {
+          if (e.clientY > $input[0].offsetTop) {
+            return $input.focus();
+          }
+        });
+        resizeInput();
+        $input.focus();
+        HEADER = ["# CoffeeScript v1.3.1 REPL", "# https://github.com/larryng/coffeescript-repl", "#", "# Press Esc to toggle multiline mode.", "# Variable `" + repl.settings.lastVariable + "` stores last returned value.", " "].join('\n');
+        return repl.print(HEADER);
       };
-      console.log = log;
-      $input.keydown(function(e) {
-        return repl.handleKeypress(e);
-      });
-      $input.keydown(scrollToBottom);
-      $(window).resize(resizeInput);
-      $input.keyup(resizeInput);
-      $input.change(resizeInput);
-      $('html').click(function(e) {
-        if (e.clientY > $input[0].offsetTop) {
-          return $input.focus();
-        }
-      });
-      resizeInput();
-      $input.focus();
-      HEADER = ["# CoffeeScript v1.3.1 REPL", "# https://github.com/larryng/coffeescript-repl", "#", "# Press Esc to toggle multiline mode.", "# Variable `" + repl.settings.lastVariable + "` stores last returned value.", " "].join('\n');
-      return repl.print(HEADER);
+      return init();
     });
   });
 
