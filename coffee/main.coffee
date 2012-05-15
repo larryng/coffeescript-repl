@@ -73,6 +73,10 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         @saved += '\n'
         @addToHistory s
       
+      clear: =>
+        @output[0].innerHTML = ''
+        undefined
+      
       handleKeypress: (e) ->
         switch e.which
           when 13
@@ -132,11 +136,6 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
       window.scrollTo 0, $prompt[0].offsetTop
     
     
-    clear = ->
-      $output[0].innerHTML = ''
-      undefined
-    
-    
     init = ->
       
       # instantiate our REPL
@@ -150,7 +149,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
       console.log = log
       
       # set clear()
-      window.clear = clear
+      window.clear = repl.clear
       
       # bind handlers
       $input.keydown (e) -> repl.handleKeypress e
