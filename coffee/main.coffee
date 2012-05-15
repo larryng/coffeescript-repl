@@ -46,7 +46,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
           compiled = compiled[14...-17]
           value = eval.call window, compiled
           window[@settings.lastVariable] = value
-          output = nodeutil.inspect value
+          output = nodeutil.inspect value, undefined, undefined, true
         catch e
           if e.stack
             output = e.stack
