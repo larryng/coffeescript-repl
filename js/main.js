@@ -61,7 +61,7 @@
             compiled = compiled.slice(14, -17);
             value = eval.call(window, compiled);
             window[this.settings.lastVariable] = value;
-            output = nodeutil.inspect(value);
+            output = nodeutil.inspect(value, void 0, void 0, true);
           } catch (e) {
             if (e.stack) {
               output = e.stack;
