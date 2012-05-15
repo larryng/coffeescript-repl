@@ -33,6 +33,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
       print: (args...) ->
         s = args.join(' ') or ' '
         @output[0].innerHTML += "<pre>#{s}</pre>"
+        undefined
       
       grabInput: ->
         tmp = @input.val()
