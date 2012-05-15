@@ -126,7 +126,7 @@ define(
       'yellow' : [33, 39]
     };
     
-    /*
+    
     // Don't use 'blue' not visible on cmd.exe
     var styles = {
       'special': 'cyan',
@@ -140,7 +140,7 @@ define(
       'regexp': 'red'
     };
     
-    
+    /*
     function stylizeWithColor(str, styleType) {
       var style = styles[styleType];
     
@@ -153,28 +153,10 @@ define(
     }
     */
     
-    var styles = {
-      'special': '#4ff',
-      'number': '#ff4',
-      'boolean': '#ff4',
-      'undefined': '#999',
-      'null': 'bold',
-      'string': '#4f4',
-      'date': '#f4f',
-      // "name": intentionally not styling
-      'regexp': '#f44'
-    };
-    
     
     function stylizeWithColor(str, styleType) {
-      var style = styles[styleType];
-    
-      if (style) {
-        if (style === 'bold') {
-          return '<span style="font-weight: bold">' + str + '</span>';
-        } else {
-          return '<span style="color:' + style + '">' + str + '</span>';
-        }
+      if (Object.keys(styles).indexOf(styleType) >= 0) {
+        return '<span class="s_' + styleType + '">' + str + '</span>';
       } else {
         return str;
       }
