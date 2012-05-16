@@ -20,9 +20,10 @@ Problems Solved
 Features
 --------
 * CoffeeScript REPL. Instantly. In your browser.  No need for installation.
-* Session history
+* Command history
 * Multiline support
-* Colorized output based on type
-* Access last returned value with the `$_` variable
+* Colorized output
+* Access last returned value
+* Customizable settings
 * 100% HTML and JavaScript
 * ISC Licensed
