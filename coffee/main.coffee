@@ -149,11 +149,9 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
       repl = new CoffeeREPL $output, $input, $prompt
       
       # replace console.log
-      log = (args...) ->
+      console.log = (args...) ->
         SAVED_CONSOLE_LOG.apply console, args
         repl.print args...
-      
-      console.log = log
       
       # expose repl as $$
       window.$$ = repl
@@ -173,6 +171,8 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
       # initialize window
       resizeInput()
       $input.focus()
+      
+      # help
       
       # print header
       HEADER = [

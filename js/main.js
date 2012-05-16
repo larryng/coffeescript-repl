@@ -176,15 +176,14 @@
         return window.scrollTo(0, $prompt[0].offsetTop);
       };
       init = function() {
-        var HEADER, log, repl;
+        var HEADER, repl;
         repl = new CoffeeREPL($output, $input, $prompt);
-        log = function() {
+        console.log = function() {
           var args;
           args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
           SAVED_CONSOLE_LOG.apply(console, args);
           return repl.print.apply(repl, args);
         };
-        console.log = log;
         window.$$ = repl;
         $input.keydown(function(e) {
           return repl.handleKeypress(e);
