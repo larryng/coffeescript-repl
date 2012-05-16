@@ -5,11 +5,15 @@
 
   require(['jquery', 'coffee-script', 'nodeutil'], function($, CoffeeScript, nodeutil) {
     return $(function() {
-      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, DEFAULT_LAST_VARIABLE, DEFAULT_MAX_DEPTH, DEFAULT_MAX_LINES, SAVED_CONSOLE_LOG, escapeHTML, init, resizeInput, scrollToBottom;
+      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, DEFAULT_SETTINGS, SAVED_CONSOLE_LOG, escapeHTML, init, resizeInput, scrollToBottom;
       SAVED_CONSOLE_LOG = console.log;
-      DEFAULT_LAST_VARIABLE = '$_';
-      DEFAULT_MAX_LINES = 500;
-      DEFAULT_MAX_DEPTH = 2;
+      DEFAULT_SETTINGS = {
+        lastVariable: '$_',
+        maxLines: 500,
+        maxDepth: 2,
+        showHidden: false,
+        colorize: true
+      };
       $output = $('#output');
       $input = $('#input');
       $prompt = $('#prompt');
@@ -52,11 +56,7 @@
           this.historyi = -1;
           this.saved = '';
           this.multiline = false;
-          this.settings = {
-            lastVariable: DEFAULT_LAST_VARIABLE,
-            maxLines: DEFAULT_MAX_LINES,
-            maxDepth: DEFAULT_MAX_DEPTH
-          };
+          this.settings = $.extend({}, DEFAULT_SETTINGS);
           for (k in settings) {
             v = settings[k];
             this.settings[k] = v;
@@ -86,7 +86,7 @@
             compiled = compiled.slice(14, -17);
             value = eval.call(window, compiled);
             window[this.settings.lastVariable] = value;
-            output = nodeutil.inspect(value, void 0, this.settings.maxDepth, true);
+            output = nodeutil.inspect(value, this.settings.showHidden, this.settings.maxDepth, this.settings.colorize);
           } catch (e) {
             if (e.stack) {
               output = e.stack;
@@ -177,7 +177,7 @@
         $inputcopy.html(content);
         $inputcopy.width(width);
         $input.width(width);
-        return $input.height($inputcopy.height());
+        return $input.height($inputcopy.height() + 2);
       };
       scrollToBottom = function() {
         return window.scrollTo(0, $prompt[0].offsetTop);
@@ -192,7 +192,7 @@
           return repl.print.apply(repl, args);
         };
         console.log = log;
-        window.clear = repl.clear;
+        window.$$ = repl;
         $input.keydown(function(e) {
           return repl.handleKeypress(e);
         });

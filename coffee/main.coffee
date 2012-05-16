@@ -7,9 +7,12 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
 
   $ ->
     SAVED_CONSOLE_LOG = console.log
-    DEFAULT_LAST_VARIABLE = '$_'
-    DEFAULT_MAX_LINES = 500
-    DEFAULT_MAX_DEPTH = 2
+    DEFAULT_SETTINGS =
+      lastVariable: '$_'
+      maxLines: 500
+      maxDepth: 2
+      showHidden: false
+      colorize: true
     
     $output    = $('#output')
     $input     = $('#input')
@@ -31,10 +34,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         @saved = ''
         @multiline = false
         
-        @settings =
-          lastVariable: DEFAULT_LAST_VARIABLE
-          maxLines: DEFAULT_MAX_LINES
-          maxDepth: DEFAULT_MAX_DEPTH
+        @settings = $.extend({}, DEFAULT_SETTINGS)
         
         for k, v of settings
           @settings[k] = v
@@ -56,7 +56,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
           compiled = compiled[14...-17]
           value = eval.call window, compiled
           window[@settings.lastVariable] = value
-          output = nodeutil.inspect value, undefined, @settings.maxDepth, true
+          output = nodeutil.inspect value, @settings.showHidden, @settings.maxDepth, @settings.colorize
         catch e
           if e.stack
             output = e.stack
@@ -139,7 +139,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
       
       $inputcopy.width width
       $input.width width
-      $input.height $inputcopy.height()
+      $input.height $inputcopy.height() + 2
     
     
     scrollToBottom = ->
@@ -158,8 +158,8 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
       
       console.log = log
       
-      # set clear()
-      window.clear = repl.clear
+      # expose repl as $$
+      window.$$ = repl
       
       # bind handlers
       $input.keydown (e) -> repl.handleKeypress e
