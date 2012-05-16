@@ -38,6 +38,8 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         
         for k, v of settings
           @settings[k] = v
+        
+        @input.keydown @handleKeypress
       
       print: (args...) =>
         s = args.join(' ') or ' '
@@ -156,8 +158,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
       # expose repl as $$
       window.$$ = repl
       
-      # bind handlers
-      $input.keydown (e) -> repl.handleKeypress e
+      # bind other handlers
       $input.keydown scrollToBottom
       
       $(window).resize resizeInput

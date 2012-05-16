@@ -59,6 +59,7 @@
             v = settings[k];
             this.settings[k] = v;
           }
+          this.input.keydown(this.handleKeypress);
         }
 
         CoffeeREPL.prototype.print = function() {
@@ -185,9 +186,6 @@
           return repl.print.apply(repl, args);
         };
         window.$$ = repl;
-        $input.keydown(function(e) {
-          return repl.handleKeypress(e);
-        });
         $input.keydown(scrollToBottom);
         $(window).resize(resizeInput);
         $input.keyup(resizeInput);
