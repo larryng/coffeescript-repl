@@ -48,8 +48,6 @@
 
           this.processSaved = __bind(this.processSaved, this);
 
-          this.grabInput = __bind(this.grabInput, this);
-
           this.print = __bind(this.print, this);
 
           this.history = [];
@@ -70,13 +68,6 @@
           o = this.output[0].innerHTML + s + '\n';
           this.output[0].innerHTML = o.split('\n').slice(-this.settings.maxLines).join('\n');
           return;
-        };
-
-        CoffeeREPL.prototype.grabInput = function() {
-          var tmp;
-          tmp = this.input.val();
-          $input.val('');
-          return tmp;
         };
 
         CoffeeREPL.prototype.processSaved = function() {
@@ -128,7 +119,8 @@
           switch (e.which) {
             case 13:
               e.preventDefault();
-              input = this.grabInput();
+              input = this.input.val();
+              this.input.val('');
               this.print(this.prompt.html() + escapeHTML(input));
               if (input) {
                 this.addToSaved(input);
@@ -141,7 +133,8 @@
               e.preventDefault();
               input = this.input.val();
               if (input && this.multiline && this.saved) {
-                input = this.grabInput();
+                input = this.input.val();
+                this.input.val('');
                 this.print(this.prompt.html() + escapeHTML(input));
                 this.addToSaved(input);
                 this.processSaved();

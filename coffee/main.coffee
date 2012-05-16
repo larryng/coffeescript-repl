@@ -45,11 +45,6 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         @output[0].innerHTML = o.split('\n')[-@settings.maxLines...].join('\n')
         undefined
       
-      grabInput: =>
-        tmp = @input.val()
-        $input.val ''
-        tmp
-      
       processSaved: =>
         try
           compiled = CoffeeScript.compile @saved
@@ -91,7 +86,8 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         switch e.which
           when 13
             e.preventDefault()
-            input = @grabInput()
+            input = @input.val()
+            @input.val ''
             
             @print @prompt.html() + escapeHTML(input)
             
@@ -105,7 +101,8 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
             input = @input.val()
             
             if input and @multiline and @saved
-              input = @grabInput()
+              input = @input.val()
+              @input.val ''
               
               @print @prompt.html() + escapeHTML(input)
               @addToSaved input
