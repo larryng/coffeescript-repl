@@ -151,14 +151,6 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
       # instantiate our REPL
       repl = new CoffeeREPL $output, $input, $prompt
       
-      # replace console.log
-      console.log = (args...) ->
-        SAVED_CONSOLE_LOG.apply console, args
-        repl.print args...
-      
-      # expose repl as $$
-      window.$$ = repl
-      
       # bind other handlers
       $input.keydown scrollToBottom
       
@@ -170,11 +162,17 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         if e.clientY > $input[0].offsetTop
           $input.focus()
       
+      # replace console.log
+      console.log = (args...) ->
+        SAVED_CONSOLE_LOG.apply console, args
+        repl.print args...
+      
+      # expose repl as $$
+      window.$$ = repl
+      
       # initialize window
       resizeInput()
       $input.focus()
-      
-      # help
       
       # print header
       HEADER = [

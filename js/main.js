@@ -181,13 +181,6 @@
       init = function() {
         var HEADER, repl;
         repl = new CoffeeREPL($output, $input, $prompt);
-        console.log = function() {
-          var args;
-          args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-          SAVED_CONSOLE_LOG.apply(console, args);
-          return repl.print.apply(repl, args);
-        };
-        window.$$ = repl;
         $input.keydown(scrollToBottom);
         $(window).resize(resizeInput);
         $input.keyup(resizeInput);
@@ -197,6 +190,13 @@
             return $input.focus();
           }
         });
+        console.log = function() {
+          var args;
+          args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+          SAVED_CONSOLE_LOG.apply(console, args);
+          return repl.print.apply(repl, args);
+        };
+        window.$$ = repl;
         resizeInput();
         $input.focus();
         HEADER = ["# CoffeeScript v1.3.1 REPL", "# <a href=\"https://github.com/larryng/coffeescript-repl\" target=\"_blank\">https://github.com/larryng/coffeescript-repl</a>", "#", "# Tips:", "#   - Press Esc to toggle multiline mode.", "#   - " + repl.settings.lastVariable + " stores last returned value.", "#   - clear() clears the console.", " "].join('\n');
