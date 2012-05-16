@@ -148,9 +148,6 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
     
     init = ->
       
-      # instantiate our REPL
-      repl = new CoffeeREPL $output, $input, $prompt
-      
       # bind other handlers
       $input.keydown scrollToBottom
       
@@ -161,6 +158,9 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
       $('html').click (e) ->
         if e.clientY > $input[0].offsetTop
           $input.focus()
+      
+      # instantiate our REPL
+      repl = new CoffeeREPL $output, $input, $prompt
       
       # replace console.log
       console.log = (args...) ->
@@ -174,19 +174,38 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
       resizeInput()
       $input.focus()
       
+      # help
+      window.help = ->
+        text = [
+          " "
+          "<strong>Features</strong>"
+          "<strong>========</strong>"
+          "+ <strong>Esc</strong> toggles multiline mode."
+          "+ <strong>Up/Down arrow</strong> flips through line history."
+          "+ <strong>#{repl.settings.lastVariable}</strong> stores the last returned value."
+          "+ Access the internals of this console through the <strong>$$</strong> variable."
+          "+ <strong>$$.clear()</strong> clears this console."
+          " "
+          "<strong>Settings</strong>"
+          "<strong>========</strong>"
+          "You can modify the behavior of this REPL by altering <strong>$$.settings</strong>:"
+          " "
+          "+ <strong>lastVariable</strong> (#{repl.settings.lastVariable}): variable name in which last returned value is stored"
+          "+ <strong>maxLines</strong> (#{repl.settings.maxLines}): max line count of this console"
+          "+ <strong>maxDepth</strong> (#{repl.settings.maxDepth}): max depth in which to inspect outputted object"
+          "+ <strong>showHidden</strong> (#{repl.settings.showHidden}): flag to output hidden (not enumerable) properties of objects"
+          "+ <strong>colorize</strong> (#{repl.settings.colorize}): flag to colorize output (set to false if REPL is slow)"
+          " "
+        ].join('\n')
+        repl.print text 
+      
       # print header
-      HEADER = [
+      repl.print [
         "# CoffeeScript v1.3.1 REPL"
         "# <a href=\"https://github.com/larryng/coffeescript-repl\" target=\"_blank\">https://github.com/larryng/coffeescript-repl</a>"
         "#"
-        "# Tips:"
-        "#   - Press Esc to toggle multiline mode."
-        "#   - #{repl.settings.lastVariable} stores last returned value."
-        "#   - clear() clears the console."
-        " "
+        "# help() for features and tips."
       ].join('\n')
-      
-      repl.print HEADER
     
     
     init()

@@ -179,8 +179,7 @@
         return window.scrollTo(0, $prompt[0].offsetTop);
       };
       init = function() {
-        var HEADER, repl;
-        repl = new CoffeeREPL($output, $input, $prompt);
+        var repl;
         $input.keydown(scrollToBottom);
         $(window).resize(resizeInput);
         $input.keyup(resizeInput);
@@ -190,6 +189,7 @@
             return $input.focus();
           }
         });
+        repl = new CoffeeREPL($output, $input, $prompt);
         console.log = function() {
           var args;
           args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
@@ -199,8 +199,12 @@
         window.$$ = repl;
         resizeInput();
         $input.focus();
-        HEADER = ["# CoffeeScript v1.3.1 REPL", "# <a href=\"https://github.com/larryng/coffeescript-repl\" target=\"_blank\">https://github.com/larryng/coffeescript-repl</a>", "#", "# Tips:", "#   - Press Esc to toggle multiline mode.", "#   - " + repl.settings.lastVariable + " stores last returned value.", "#   - clear() clears the console.", " "].join('\n');
-        return repl.print(HEADER);
+        window.help = function() {
+          var text;
+          text = [" ", "<strong>Features</strong>", "<strong>========</strong>", "+ <strong>Esc</strong> toggles multiline mode.", "+ <strong>Up/Down arrow</strong> flips through line history.", "+ <strong>" + repl.settings.lastVariable + "</strong> stores the last returned value.", "+ Access the internals of this console through the <strong>$$</strong> variable.", "+ <strong>$$.clear()</strong> clears this console.", " ", "<strong>Settings</strong>", "<strong>========</strong>", "You can modify the behavior of this REPL by altering <strong>$$.settings</strong>:", " ", "+ <strong>lastVariable</strong> (" + repl.settings.lastVariable + "): variable name in which last returned value is stored", "+ <strong>maxLines</strong> (" + repl.settings.maxLines + "): max line count of this console", "+ <strong>maxDepth</strong> (" + repl.settings.maxDepth + "): max depth in which to inspect outputted object", "+ <strong>showHidden</strong> (" + repl.settings.showHidden + "): flag to output hidden (not enumerable) properties of objects", "+ <strong>colorize</strong> (" + repl.settings.colorize + "): flag to colorize output (set to false if REPL is slow)", " "].join('\n');
+          return repl.print(text);
+        };
+        return repl.print(["# CoffeeScript v1.3.1 REPL", "# <a href=\"https://github.com/larryng/coffeescript-repl\" target=\"_blank\">https://github.com/larryng/coffeescript-repl</a>", "#", "# help() for features and tips."].join('\n'));
       };
       return init();
     });
