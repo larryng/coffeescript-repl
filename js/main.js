@@ -5,15 +5,8 @@
 
   require(['jquery', 'coffee-script', 'nodeutil'], function($, CoffeeScript, nodeutil) {
     return $(function() {
-      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, DEFAULT_SETTINGS, SAVED_CONSOLE_LOG, escapeHTML, init, resizeInput, scrollToBottom;
+      var $input, $inputcopy, $inputdiv, $inputl, $inputr, $output, $prompt, CoffeeREPL, SAVED_CONSOLE_LOG, escapeHTML, init, resizeInput, scrollToBottom;
       SAVED_CONSOLE_LOG = console.log;
-      DEFAULT_SETTINGS = {
-        lastVariable: '$_',
-        maxLines: 500,
-        maxDepth: 2,
-        showHidden: false,
-        colorize: true
-      };
       $output = $('#output');
       $input = $('#input');
       $prompt = $('#prompt');
@@ -25,8 +18,17 @@
         return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       };
       CoffeeREPL = (function() {
+        var DEFAULT_SETTINGS;
 
         CoffeeREPL.name = 'CoffeeREPL';
+
+        DEFAULT_SETTINGS = {
+          lastVariable: '$_',
+          maxLines: 500,
+          maxDepth: 2,
+          showHidden: false,
+          colorize: true
+        };
 
         function CoffeeREPL(output, input, prompt, settings) {
           var k, v;

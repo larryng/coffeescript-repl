@@ -7,12 +7,6 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
 
   $ ->
     SAVED_CONSOLE_LOG = console.log
-    DEFAULT_SETTINGS =
-      lastVariable: '$_'
-      maxLines: 500
-      maxDepth: 2
-      showHidden: false
-      colorize: true
     
     $output    = $('#output')
     $input     = $('#input')
@@ -28,6 +22,13 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
     
     
     class CoffeeREPL
+      DEFAULT_SETTINGS =
+        lastVariable: '$_'
+        maxLines: 500
+        maxDepth: 2
+        showHidden: false
+        colorize: true
+      
       constructor: (@output, @input, @prompt, settings={}) ->
         @history = []
         @historyi = -1
