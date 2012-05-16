@@ -47,7 +47,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         @input.keydown @handleKeypress
       
       resetSettings: ->
-        localStorage.settings = {}
+        localStorage = {}
       
       saveSettings: ->
         localStorage.settings = JSON.stringify($.extend({}, @settings))

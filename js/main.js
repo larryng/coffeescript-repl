@@ -72,7 +72,8 @@
         }
 
         CoffeeREPL.prototype.resetSettings = function() {
-          return localStorage.settings = {};
+          var localStorage;
+          return localStorage = {};
         };
 
         CoffeeREPL.prototype.saveSettings = function() {
