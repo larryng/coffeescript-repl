@@ -31,7 +31,7 @@
         };
 
         function CoffeeREPL(output, input, prompt, settings) {
-          var k, v;
+          var k, v, _ref;
           this.output = output;
           this.input = input;
           this.prompt = prompt;
@@ -57,12 +57,27 @@
           this.saved = '';
           this.multiline = false;
           this.settings = $.extend({}, DEFAULT_SETTINGS);
+          if (localStorage && localStorage.settings) {
+            _ref = JSON.parse(localStorage.settings);
+            for (k in _ref) {
+              v = _ref[k];
+              this.settings[k] = v;
+            }
+          }
           for (k in settings) {
             v = settings[k];
             this.settings[k] = v;
           }
           this.input.keydown(this.handleKeypress);
         }
+
+        CoffeeREPL.prototype.resetSettings = function() {
+          return localStorage.settings = {};
+        };
+
+        CoffeeREPL.prototype.saveSettings = function() {
+          return localStorage.settings = JSON.stringify($.extend({}, this.settings));
+        };
 
         CoffeeREPL.prototype.print = function() {
           var args, o, s;
@@ -201,7 +216,7 @@
         $input.focus();
         window.help = function() {
           var text;
-          text = [" ", "<strong>Features</strong>", "<strong>========</strong>", "+ <strong>Esc</strong> toggles multiline mode.", "+ <strong>Up/Down arrow</strong> flips through line history.", "+ <strong>" + repl.settings.lastVariable + "</strong> stores the last returned value.", "+ Access the internals of this console through the <strong>$$</strong> variable.", "+ <strong>$$.clear()</strong> clears this console.", " ", "<strong>Settings</strong>", "<strong>========</strong>", "You can modify the behavior of this REPL by altering <strong>$$.settings</strong>:", " ", "+ <strong>lastVariable</strong> (" + repl.settings.lastVariable + "): variable name in which last returned value is stored", "+ <strong>maxLines</strong> (" + repl.settings.maxLines + "): max line count of this console", "+ <strong>maxDepth</strong> (" + repl.settings.maxDepth + "): max depth in which to inspect outputted object", "+ <strong>showHidden</strong> (" + repl.settings.showHidden + "): flag to output hidden (not enumerable) properties of objects", "+ <strong>colorize</strong> (" + repl.settings.colorize + "): flag to colorize output (set to false if REPL is slow)", " "].join('\n');
+          text = [" ", "<strong>Features</strong>", "<strong>========</strong>", "+ <strong>Esc</strong> toggles multiline mode.", "+ <strong>Up/Down arrow</strong> flips through line history.", "+ <strong>" + repl.settings.lastVariable + "</strong> stores the last returned value.", "+ Access the internals of this console through <strong>$$</strong>.", "+ <strong>$$.clear()</strong> clears this console.", " ", "<strong>Settings</strong>", "<strong>========</strong>", "You can modify the behavior of this REPL by altering <strong>$$.settings</strong>:", " ", "+ <strong>lastVariable</strong> (" + repl.settings.lastVariable + "): variable name in which last returned value is stored", "+ <strong>maxLines</strong> (" + repl.settings.maxLines + "): max line count of this console", "+ <strong>maxDepth</strong> (" + repl.settings.maxDepth + "): max depth in which to inspect outputted object", "+ <strong>showHidden</strong> (" + repl.settings.showHidden + "): flag to output hidden (not enumerable) properties of objects", "+ <strong>colorize</strong> (" + repl.settings.colorize + "): flag to colorize output (set to false if REPL is slow)", " ", "<strong>$$.saveSettings()</strong> will save settings to localStorage.", "<strong>$$.resetSettings()</strong> will reset settings to default.", " "].join('\n');
           return repl.print(text);
         };
         return repl.print(["# CoffeeScript v1.3.1 REPL", "# <a href=\"https://github.com/larryng/coffeescript-repl\" target=\"_blank\">https://github.com/larryng/coffeescript-repl</a>", "#", "# help() for features and tips."].join('\n'));

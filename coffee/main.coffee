@@ -37,10 +37,20 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
         
         @settings = $.extend({}, DEFAULT_SETTINGS)
         
+        if localStorage and localStorage.settings
+          for k, v of JSON.parse(localStorage.settings)
+            @settings[k] = v
+        
         for k, v of settings
           @settings[k] = v
         
         @input.keydown @handleKeypress
+      
+      resetSettings: ->
+        localStorage.settings = {}
+      
+      saveSettings: ->
+        localStorage.settings = JSON.stringify($.extend({}, @settings))
       
       print: (args...) =>
         s = args.join(' ') or ' '
@@ -183,7 +193,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
           "+ <strong>Esc</strong> toggles multiline mode."
           "+ <strong>Up/Down arrow</strong> flips through line history."
           "+ <strong>#{repl.settings.lastVariable}</strong> stores the last returned value."
-          "+ Access the internals of this console through the <strong>$$</strong> variable."
+          "+ Access the internals of this console through <strong>$$</strong>."
           "+ <strong>$$.clear()</strong> clears this console."
           " "
           "<strong>Settings</strong>"
@@ -195,6 +205,9 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
           "+ <strong>maxDepth</strong> (#{repl.settings.maxDepth}): max depth in which to inspect outputted object"
           "+ <strong>showHidden</strong> (#{repl.settings.showHidden}): flag to output hidden (not enumerable) properties of objects"
           "+ <strong>colorize</strong> (#{repl.settings.colorize}): flag to colorize output (set to false if REPL is slow)"
+          " "
+          "<strong>$$.saveSettings()</strong> will save settings to localStorage."
+          "<strong>$$.resetSettings()</strong> will reset settings to default."
           " "
         ].join('\n')
         repl.print text 
