@@ -214,7 +214,7 @@ require ['jquery', 'coffee-script', 'nodeutil'], ($, CoffeeScript, nodeutil) ->
       
       # print header
       repl.print [
-        "# CoffeeScript v1.3.1 REPL"
+        "# CoffeeScript v#{CoffeeScript.VERSION} REPL"
         "# <a href=\"https://github.com/larryng/coffeescript-repl\" target=\"_blank\">https://github.com/larryng/coffeescript-repl</a>"
         "#"
         "# help() for features and tips."
